@@ -145,3 +145,76 @@ friends2 %>%
   distinct()
 
 distinct(friends2)
+
+# Manipulate
+###############
+# Create or change a variable (mutate)
+starwars %>% 
+  mutate(height_m = height / 100) %>% 
+  select(name, height, height_m)
+
+# Conditional change (if_else)
+starwars %>% 
+  mutate(height_m = height / 100) %>%
+  select(name, height, height_m) %>%
+  mutate(tallness = 
+           if_else(height_m < 1,
+                   "short",
+                   "tall"))
+
+# Reshape your data with Pivot wider
+library(gapminder)
+View(gapminder)
+
+data <- gapminder %>%
+  select(country, year, lifeExp)
+
+View(data)
+
+wide_data <- data %>%
+  pivot_wider(names_from = year, values_from = lifeExp)
+
+View(wide_data)
+
+# Reshape data with pivot longer
+long_data <- wide_data %>% 
+  pivot_longer(2:13,
+               names_to = "year",
+               values_to = "lifeExp")
+
+View(long_data)
+
+# Describe
+##################
+View(msleep)
+
+# Range / spread
+min(msleep$awake)
+max(msleep$awake)
+range(msleep$awake)
+IQR(msleep$awake)
+
+# Centrality
+mean(msleep$awake)
+median(msleep$awake)
+
+# Variance
+var(msleep$awake)
+
+summary(msleep$awake)
+
+msleep %>% 
+  select(awake, sleep_total) %>%
+  summary()
+
+# Summarize your data
+msleep %>%
+  drop_na(vore) %>%
+  group_by(vore) %>%
+  summarise(Lower = min(sleep_total),
+            Average = mean(sleep_total),
+            Upper = max(sleep_total),
+            Difference =
+              max(sleep_total) - min(sleep_total)) %>% 
+  arrange(Average) %>%
+  View()
