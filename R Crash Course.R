@@ -218,3 +218,11 @@ msleep %>%
               max(sleep_total) - min(sleep_total)) %>% 
   arrange(Average) %>%
   View()
+
+# Create tables
+table(msleep$vore)
+
+msleep %>% 
+  select(vore, order) %>% 
+  filter(order %in% c("Rodentia", "Primates")) %>% 
+  table()
