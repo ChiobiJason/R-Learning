@@ -285,3 +285,64 @@ starwars %>%
   facet_wrap(~sex)+
   theme_bw()+
   labs(title = "Height and mass by sex")
+
+
+# Analyze
+###############
+# Hypothesis testing
+# T-test
+library(gapminder)
+View(gapminder)
+t_test_plot
+
+gapminder %>% 
+  filter(continent %in% c("Africa", "Europe")) %>%
+  t.test(lifeExp ~ continent, data = .,
+         alternative = "two.sided")
+
+# ANOVA (Analysis of Variance)
+gapminder %>% 
+  filter(year == 2007) %>% 
+  filter(continent %in% c("Americas", "Europe", "Asia")) %>% 
+  aov(lifeExp ~ continent, data = .) %>%
+  summary()
+
+gapminder %>% 
+  filter(year == 2007) %>% 
+  filter(continent %in% c("Americas", "Europe", "Asia")) %>% 
+  aov(lifeExp ~ continent, data = .) %>%
+  TukeyHSD()
+
+gapminder %>% 
+  filter(year == 2007) %>% 
+  filter(continent %in% c("Americas", "Europe", "Asia")) %>% 
+  aov(lifeExp ~ continent, data = .) %>%
+  TukeyHSD() %>% 
+  plot()
+
+# Chi Squared
+head(iris)
+
+flowers <- iris %>%
+  mutate(Size = cut(Sepal.Length,
+                    breaks = 3,
+                    labels = c("Small", "Medium", "Large"))) %>%
+  select(Species, Size)
+
+# Chi Squared goodness of fit test
+flowers %>%
+  select(Size) %>%
+  table() %>% 
+  chisq.test()
+
+# Chi Squared test of independence
+flowers %>% 
+  table() %>%
+  chisq.test()
+
+# Linear Model
+head(cars, 10)
+
+cars %>% 
+  lm(dist ~ speed, data = .) %>%
+  summary()
