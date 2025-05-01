@@ -131,3 +131,194 @@ if (b > a) {
 }
 
 # Operators
+2 + 2
+3 - 1
+2 * 2
+4 / 2
+2 ^ 2
+5 %% 2 # modulo (remainder from division)
+15 %/% 2 # integer division (rounds the result down to the nearest whole number)
+
+my_var <- 3
+
+my_var <<- 3 # global variable assignment
+
+3 -> my_var
+
+3 ->> my_var # global variable assignment
+
+my_var
+
+# Logical Operators
+c(TRUE, FALSE, TRUE) & c(TRUE, TRUE, FALSE) # Result: TRUE FALSE FALSE
+
+c(TRUE, FALSE) && c(TRUE, TRUE) # Result: TRUE (only compares the first 
+                                # TRUE && TRUE)
+
+c(TRUE, FALSE, FALSE) | c(FALSE, TRUE, FALSE) # Result: TRUE TRUE FALSE
+
+c(TRUE, FALSE) || c(FALSE, TRUE) # Result: TRUE (only compares first: 
+                                 # TRUE || FALSE)
+
+!TRUE   # FALSE
+!FALSE  # TRUE
+
+# IF-ELSE STATEMENTS
+a <- 10
+b <- 10
+
+if (b > a) {
+  print("b is greater than a")
+} else if (b == a) {
+  print("b and a are equal")
+} else {
+  print("a is greater than b")
+}
+
+x <- 41
+
+if (x > 10) {
+  print("Above ten")
+  if (x > 20) {
+    print("and also above 20!")
+  } else {
+    print("but not above 20.")
+  }
+} else {
+  print("below 10.")
+}
+
+a <- 200
+b <- 20
+c <- 300
+
+if (a > b & c > a) {
+  print("Both conditions are true")
+}
+
+if (a > b | a > c) {
+  print("At least one of the conditions is true")
+}
+
+# WHILE LOOP
+i <- 1
+while (i < 6) {
+  print(i)
+  i <- i + 1
+}
+
+i <- 1
+while (i < 6) {
+  print(i)
+  i <- i + 1
+  if (i == 4) {
+    break
+  }
+}
+
+i <- 0
+while (i < 6) {
+  i <- i + 1
+  if (i == 3) {
+    next
+  }
+  print(i)
+}
+
+dice <- 1
+while (dice <= 6) {
+  if (dice < 6) {
+    print("No Yahtzee")
+  } else {
+    print("Yahtzee!")
+  }
+  dice <- dice + 1
+}
+
+# FOR LOOPS
+fruits <- list("apple", "banana", "cherry")
+
+for (x in fruits) {
+  print(x)
+}
+
+for (x in fruits) {
+  if (x == "banana") {
+    next
+  }
+  print(x)
+}
+
+for (x in fruits) {
+  if (x == "banana") {
+    break
+  }
+  print(x)
+}
+
+# NESTED FOR LOOPS
+adj <- list("red", "big", "tasty")
+fruits <- list("apple", "banana", "cherry")
+
+for (x in adj) {
+  for (y in fruits) {
+    print(paste(x, y))
+  }
+}
+
+# FUNCTIONS
+double <- function(givenNumber = 1) { # has a default parameter of 1
+  print(givenNumber + givenNumber)
+}
+
+double()
+double(2)
+
+divide <- function(givenNumber, numberToDivideBy) {
+  return(givenNumber / numberToDivideBy)
+}
+
+print(divide(20, 2))
+
+# NESTED FUCTIONS
+Nested_function <- function(x, y) {
+  a <- x + y
+  return(a)
+}
+
+Nested_function(Nested_function(2,2), Nested_function(3,3))
+
+Outer_func <- function(x) {
+  Inner_func <- function(y) {
+    a <- x + y
+    return(a)
+  }
+  return (Inner_func)
+}
+
+output <- Outer_func(3) # To call the Outer_func
+output(5)
+
+# RECURSION
+tri_recursion <- function(k) {
+  if (k > 0) {
+    result <- k + tri_recursion(k - 1)
+    print(result)
+  } else {
+    result = 0
+    return(result)
+  }
+}
+tri_recursion(6)
+
+# GLOBAL VARIABLES
+txt <- "lala"
+
+my_function <- function() {
+  txt <<- "fantastic"
+  paste("R is", txt)
+}
+
+my_function()
+
+print(txt)
