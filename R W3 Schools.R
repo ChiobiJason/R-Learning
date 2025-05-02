@@ -322,3 +322,36 @@ my_function <- function() {
 my_function()
 
 print(txt)
+
+# VECTORS (Can only have one data type)
+fruits <- c("banana", "apple", "orange", "mango", "lemon")
+fruits
+sort(fruits)
+
+numbers <- 1:10
+numbers
+length(numbers)
+
+# Accessing and modifiying vector items
+fruits[1]
+fruits[1] <- "pear"
+fruits
+
+repeat_times <- rep(c(1,2,3), times = 3)
+repeat_times
+
+numbers2 <- seq(from = 0, to = 100, by = 20)
+numbers2
+
+# LISTS (Can have different data types)
+myList <- list("Jason", 5, TRUE)
+myList
+myList[1]
+
+length(myList)
+
+"Jason" %in% myList
+
+append(myList, "Orange")
+
+append(myList, "night", after = 2)
