@@ -48,17 +48,27 @@ SSHA_Population_long <- SSHA_Population %>%
   # Convert Year names to just the year values
   mutate(Year = ifelse(Year == "Population_in_1996", "1996", "2021"))
 
+# Was trying to make 1996 come first but 
+# on several attempts all i tried didn't work
+SSHA_Population_long$Year <- 
+  factor(SSHA_Population_long$Year, levels = c("1996", "2021"))
+
 # Create the horizontal grouped bar chart
-Figure_1 <- ggplot(SSHA_Population_long, aes(y = Provinces, x = Population, fill = Year)) +
-  geom_col(position = position_dodge(width = 0.9)) +
-  scale_fill_manual(values = c("1996" = "#FF7F50", "2021" = "#000080")) +  # Orange for 1996, Navy blue for 2021
+Figure_1 <- ggplot(SSHA_Population_long, aes(
+  x = Population, 
+  y = Provinces, 
+  fill = Year
+  )) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9)) +
+  scale_fill_manual(
+    values = c("1996" = "#FF7F50", "2021" = "#000080")
+    ) +  # Orange for 1996, Navy blue for 2021
   # Add labels directly on the bars for small values
   geom_text(aes(label = scales::comma(Population)), 
             position = position_dodge(width = 0.9),
             hjust = -0.1,  # Position text just outside the bars
             size = 3,      # Smaller text size
-            color = "black",
-            data = . %>% filter(Population < 5000)) +  # Only label small values
+            color = "black") +
   # Increase x-axis limit to make room for labels
   scale_x_continuous(labels = scales::comma, limits = 
                        c(0, max(Population_in_2021)), breaks = 
@@ -72,10 +82,12 @@ Figure_1 <- ggplot(SSHA_Population_long, aes(y = Provinces, x = Population, fill
   theme(
     panel.grid.minor = element_blank(),
     legend.position = "top",
-    axis.text.y = element_text(size = 10)
+    axis.text.y = element_text(size = 10),
+    axis.title.x = element_text(margin = margin(t = 5))
   )
 
 Figure_1
+
 
 # FIGURE 1B
 # First, make sure provinces are ordered by Population_Growth
@@ -86,7 +98,7 @@ ordered_data <- SSHA_Population_PercentageChange_PopulationGrowth %>%
 
 # Create the improved bar chart
 Figure_1b <- ggplot(ordered_data, aes(x = Provinces, y = Population_Growth)) +
-  geom_col(fill = "#65AFFF") +  # Removed incorrect margin parameter
+  geom_col(fill = "#65AFFF") +  # Fill with blue colour
   labs(
     title = "Figure 1b. SSA immigrants' population growth by province/territory (Census 1996 vs. 2021)",
     x = "Province",
