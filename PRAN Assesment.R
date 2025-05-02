@@ -74,7 +74,7 @@ Figure_1 <- ggplot(SSHA_Population_long, aes(
                        c(0, max(Population_in_2021)), breaks = 
                        seq(0, 250000, 20000)) +
   labs(
-    title = "SSA immigrants' population distribution by province/territory (Census 1996 vs 2021)",
+    title = "SSA immigrants' population distribution by province/territory (Census 2021 vs 1996)",
     y = "Province",
     x = "Population"
   ) +
