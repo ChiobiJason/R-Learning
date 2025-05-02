@@ -1,14 +1,18 @@
+# Store Provinces
 Provinces <- c("Alberta", "British Columbia", "Manitoba", "New Brunswick", 
                "Newfoundland and Labrador", "Nova Scotia", 
                "Northwest Territories", "Ontario", "Prince Edward Island", 
                "Quebec", "Saskatchewan", "Yukon")
 
+# Store 1996 Populations
 Population_in_1996 <- c(14940, 24300, 2950, 360, 265, 870, 175, 93895, 50,
                         18945, 1725, 35)
 
+# Store 2021 Populations
 Population_in_2021 <- c(102820, 46395, 23555, 3820, 1365, 4800, 560, 220915, 
                         365, 118360, 13980, 135)
 
+# Put populations in 1996 and 2021 in dataset based on PROVINCE
 SSHA_Population <- data.frame(Provinces, Population_in_1996, 
                               Population_in_2021)
 
@@ -16,12 +20,14 @@ View(SSHA_Population)
 
 library(tidyverse)
 
+# Create Percentage Change Column
 SSHA_Population_PercentageChange <- SSHA_Population %>% 
   mutate(Percentage_Change = # ((New Value - Old Value)/ Old Value) * 100
     ((Population_in_2021 - Population_in_1996) / Population_in_1996) 
          * 100)
 View(SSHA_Population_PercentageChange)
 
+# Create Population Growth Column
 SSHA_Population_PercentageChange_PopulationGrowth <- 
   SSHA_Population_PercentageChange %>% mutate(
     Population_Growth = # New Population - Old Population
@@ -43,7 +49,7 @@ SSHA_Population_long <- SSHA_Population %>%
   mutate(Year = ifelse(Year == "Population_in_1996", "1996", "2021"))
 
 # Create the horizontal grouped bar chart
-ggplot(SSHA_Population_long, aes(y = Provinces, x = Population, fill = Year)) +
+Figure_1 <- ggplot(SSHA_Population_long, aes(y = Provinces, x = Population, fill = Year)) +
   geom_col(position = position_dodge(width = 0.9)) +
   scale_fill_manual(values = c("1996" = "#FF7F50", "2021" = "#000080")) +  # Orange for 1996, Navy blue for 2021
   # Add labels directly on the bars for small values
@@ -68,3 +74,52 @@ ggplot(SSHA_Population_long, aes(y = Provinces, x = Population, fill = Year)) +
     legend.position = "top",
     axis.text.y = element_text(size = 10)
   )
+
+# FIGURE 1B
+# First, make sure provinces are ordered by Population_Growth
+ordered_data <- SSHA_Population_PercentageChange_PopulationGrowth %>%
+  arrange(desc(Population_Growth)) %>%
+  mutate(Provinces = factor(Provinces, levels = Provinces)) %>% 
+  mutate(Percentage_Change = round(Percentage_Change))
+
+# Create the improved bar chart
+Figure_1b <- ggplot(ordered_data, aes(x = Provinces, y = Population_Growth)) +
+  geom_col(fill = "#65AFFF") +  # Removed incorrect margin parameter
+  labs(
+    title = "Figure 1b. SSA immigrants' population growth by province/territory (Census 1996 vs. 2021)",
+    x = "Province",
+    y = "Population Growth"
+  ) +
+  # Wrap province names to multiple lines
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+  scale_y_continuous(
+    labels = scales::comma,  # Add commas to numbers
+    breaks = seq(0, max(ordered_data$Population_Growth), 10000)  # Create evenly spaced breaks
+  ) +
+  # Improve the theme
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 11, face = "bold"),
+    axis.title.y = element_text(margin = margin(r = 10)),
+    axis.title.x = element_text(margin = margin(t = 10)),
+    panel.grid.major.x = element_blank(),  # Remove vertical grid lines
+    panel.grid.minor = element_blank(),    # Remove minor grid lines
+    axis.text.x = element_text(angle = 0)
+  ) +
+  geom_text(
+    aes(label = paste(Percentage_Change, "%")),
+    vjust = -0.5,
+    size = 3.5,
+    color = "#1B263B",
+    fontface = "bold"
+  ) + 
+  annotate(
+    "text", x = 5, y = 60000,  
+    label = "Top percentage changes (1996 vs. 2021):\nNew Brunswick (961%), Saskatchewan (710%), Manitoba (698%)",
+    hjust = 0,  # Left-align text
+    size = 3.5,  # Text size
+    fontface = "bold",
+    color = "#1B263B"
+  )
+
+Figure_1b
