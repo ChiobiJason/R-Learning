@@ -75,6 +75,8 @@ Figure_1 <- ggplot(SSHA_Population_long, aes(y = Provinces, x = Population, fill
     axis.text.y = element_text(size = 10)
   )
 
+Figure_1
+
 # FIGURE 1B
 # First, make sure provinces are ordered by Population_Growth
 ordered_data <- SSHA_Population_PercentageChange_PopulationGrowth %>%
