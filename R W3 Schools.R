@@ -355,3 +355,15 @@ length(myList)
 append(myList, "Orange")
 
 append(myList, "night", after = 2)
+
+newlist <- myList[-1]
+
+for (x in myList) {
+  print(x)
+}
+
+list1 <- list("a", "b", "c")
+list2 <- list(1,2,3)
+list3 <- c(list1,list2)
+
+list3
