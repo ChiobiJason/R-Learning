@@ -217,3 +217,150 @@ ggplot(language_long, aes(x = "", y = Percentage, fill = Language)) +
     strip.text = element_text(face = "bold"),
     legend.position = "bottom"
   )
+
+##########################
+# By Region
+##########################
+West_Africa <- data.frame(
+  Location = c("All_Cities", "Edmonton", "Toronto", "Montreal", "Halifax"),
+  Completions = c(611, 163, 144, 217, 87),
+  Percentage = c(39.47, 39.09, 36.92, 42.89, 37.02)
+)
+
+Central_Africa <- data.frame(
+  Location = c("All_Cities", "Edmonton", "Toronto", "Montreal", "Halifax"),
+  Completions = c(285, 72, 40, 140, 33),
+  Percentage = c(18.41, 17.27, 10.26, 27.67, 14.04), 
+  stringsAsFactors = FALSE
+)
+
+East_Africa <- data.frame(
+  Location = c("All_Cities", "Edmonton", "Toronto", "Montreal", "Halifax"),
+  Completions = c(501, 156, 190, 53, 102),
+  Percentage = c(32.36, 37.41, 48.72, 10.47, 43.40)
+)
+
+South_Africa <- data.frame(
+  Location = c("All_Cities", "Edmonton", "Toronto", "Montreal", "Halifax"),
+  Completions = c(141, 25, 16, 95, 5),
+  Percentage = c(9.11, 6.00, 4.10, 18.77, 2.13),
+  stringsAsFactors = FALSE
+)
+
+# Order based on Heidi's Instruction
+West_Africa$Location <- factor(West_Africa$Location, 
+                             levels = c("All_Cities", "Edmonton",
+                                        "Toronto", "Montreal",
+                                        "Halifax"))
+Central_Africa$Location <- factor(Central_Africa$Location, 
+                               levels = c("All_Cities", "Edmonton",
+                                          "Toronto", "Montreal",
+                                          "Halifax"))
+East_Africa$Location <- factor(East_Africa$Location, 
+                               levels = c("All_Cities", "Edmonton",
+                                          "Toronto", "Montreal",
+                                          "Halifax"))
+South_Africa$Location <- factor(South_Africa$Location, 
+                               levels = c("All_Cities", "Edmonton",
+                                          "Toronto", "Montreal",
+                                          "Halifax"))
+
+# West Africa
+ggplot(West_Africa, aes(x = Location, y = Completions, fill = Location)) +
+  geom_bar(stat = "identity", fill = "#222d4d") +
+  labs(title = "PRAN Survey on Resilience Completions by City (West Africa)",
+       x = "Location",
+       y = "Number of Completions") +
+  theme_minimal() +
+  scale_y_continuous(breaks = seq(0, max(West_Africa$Completions), 100))
+
+# West Africa with Percentage
+ggplot(West_Africa, aes(x = Location, y = Completions)) +
+  geom_bar(stat = "identity", fill = "#222d4d") +
+  geom_text(aes(label = paste(Percentage, "%")), 
+            vjust = -0.5, 
+            color = "black", 
+            size = 4) +
+  labs(title = "PRAN Survey on Resilience Completions by City (West Africa)",
+       x = "Location",
+       y = "Number of Completions") +
+  theme_minimal() +
+  scale_y_continuous(
+    breaks = seq(0, max(West_Africa$Completions) + 50, 100), 
+    limits = c(0, max(West_Africa$Completions) + 20)
+  )
+
+# Central Africa
+ggplot(Central_Africa, aes(x = Location, y = Completions, fill = Location)) +
+  geom_bar(stat = "identity", fill = "#222d4d") +
+  labs(title = "PRAN Survey on Resilience Completions by City (Central Africa)",
+       x = "Location",
+       y = "Number of Completions") +
+  theme_minimal() +
+  scale_y_continuous(breaks = seq(0, max(Central_Africa$Completions), 50))
+
+# Central Africa with Percentage
+ggplot(Central_Africa, aes(x = Location, y = Completions)) +
+  geom_bar(stat = "identity", fill = "#222d4d") +
+  geom_text(aes(label = paste(Percentage, "%")), 
+            vjust = -0.5, 
+            color = "black", 
+            size = 4) +
+  labs(title = "PRAN Survey on Resilience Completions by City (Central Africa)",
+       x = "Location",
+       y = "Number of Completions") +
+  theme_minimal() +
+  scale_y_continuous(
+    breaks = seq(0, max(Central_Africa$Completions) + 50, 50), 
+    limits = c(0, max(Central_Africa$Completions) + 10)
+  )
+
+# East Africa
+ggplot(East_Africa, aes(x = Location, y = Completions, fill = Location)) +
+  geom_bar(stat = "identity", fill = "#222d4d") +
+  labs(title = "PRAN Survey on Resilience Completions by City (East Africa)",
+       x = "Location",
+       y = "Number of Completions") +
+  theme_minimal() +
+  scale_y_continuous(breaks = seq(0, max(East_Africa$Completions), 100))
+
+# East Africa with Percentage
+ggplot(East_Africa, aes(x = Location, y = Completions)) +
+  geom_bar(stat = "identity", fill = "#222d4d") +
+  geom_text(aes(label = paste(Percentage, "%")), 
+            vjust = -0.5, 
+            color = "black", 
+            size = 4) +
+  labs(title = "PRAN Survey on Resilience Completions by City (East Africa)",
+       x = "Location",
+       y = "Number of Completions") +
+  theme_minimal() +
+  scale_y_continuous(
+    breaks = seq(0, max(East_Africa$Completions) + 20, 100), 
+    limits = c(0, max(East_Africa$Completions) + 10)
+  )
+
+# South Africa
+ggplot(South_Africa, aes(x = Location, y = Completions, fill = Location)) +
+  geom_bar(stat = "identity", fill = "#222d4d") +
+  labs(title = "PRAN Survey on Resilience Completions by City (South Africa)",
+       x = "Location",
+       y = "Number of Completions") +
+  theme_minimal() +
+  scale_y_continuous(breaks = seq(0, max(South_Africa$Completions), 20))
+
+# South Africa with Percentage
+ggplot(South_Africa, aes(x = Location, y = Completions)) +
+  geom_bar(stat = "identity", fill = "#222d4d") +
+  geom_text(aes(label = paste(Percentage, "%")), 
+            vjust = -0.5, 
+            color = "black", 
+            size = 4) +
+  labs(title = "PRAN Survey on Resilience Completions by City (South Africa)",
+       x = "Location",
+       y = "Number of Completions") +
+  theme_minimal() +
+  scale_y_continuous(
+    breaks = seq(0, max(South_Africa$Completions) + 5, 20), 
+    limits = c(0, max(South_Africa$Completions))
+  )
