@@ -72,7 +72,8 @@ leaflet() %>%
     setView(lng = -100, lat = 60, zoom = 3)
 
 
-
+install.packages("mapcan")
+library("mapcan")
 library(tmap)
 data("World")
 
@@ -80,3 +81,12 @@ tm_shape(World) +
     tm_borders() +
     tm_fill("continent")
 
+pr_map <- mapcan(boundaries = province,
+                 type = standard) %>%
+    ggplot(aes(x = long, y = lat, group = group))
+pr_map
+
+pr_map <- pr_map +
+    geom_polygon() +
+    coord_fixed()
+pr_map
